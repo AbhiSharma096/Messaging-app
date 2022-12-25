@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Mesenger</string>
+    <string name="mesenger">Mesenger</string>
+    <string name="register">Register</string>
+    <string name="signup">SignUp?</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+</resources>
