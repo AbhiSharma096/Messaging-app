@@ -34,6 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/white"
+            android:typeface="serif"
             android:textSize="45sp"
 
             />
@@ -46,13 +47,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-
             >
 
-
-
-
-                >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,11 +58,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_text_input_layout"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round"
-                    android:orientation="horizontal">
+                    >
 
                     <EditText
                         android:id="@+id/etUsername"
@@ -80,7 +75,6 @@
                         android:background="@drawable/round_edittext"
                         android:textColorHint="@color/purple_200"
                         android:textColor="@color/black"
-
                         android:hint="@string/email" />
 
 
@@ -114,12 +108,15 @@
         </androidx.cardview.widget.CardView>
         <Button
             android:id="@+id/signin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Sign in"
             android:textAllCaps="false"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:textStyle="bold"
+            android:shadowColor="@color/white"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:background="@drawable/round_button"

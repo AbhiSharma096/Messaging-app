@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         var etpassword = Password.text.toString()
         btn.setOnClickListener {
         if (etemail.isEmpty() || etpassword.isEmpty()) {
-            Toast.makeText(this, "Please enter email/password !", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Please enter email/password !", Toast.LENGTH_SHORT).show()
         } else {
                     auth.signInWithEmailAndPassword(etemail, etpassword)
                     .addOnCompleteListener(this) { task ->
