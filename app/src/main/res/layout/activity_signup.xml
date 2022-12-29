@@ -37,17 +37,17 @@
             android:typeface="serif"
 
             />
-        <Button
+        <ImageButton
             android:id="@+id/imagebutton"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/imageback"
+            android:background="@drawable/user"
             android:text="Select Image"
             android:padding="20dp"
             android:textAllCaps="false"
             >
 
-        </Button>
+        </ImageButton>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

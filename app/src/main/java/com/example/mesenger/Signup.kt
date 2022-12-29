@@ -17,6 +17,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -34,31 +35,44 @@ import java.util.UUID
 class Signup : AppCompatActivity() {
 
     private val cameraandmediaResultLanture : ActivityResultLauncher<Array<String>> =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()){
-                permission->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permission->
             permission.entries.forEach{
                 val permissionname = it.key
                 val isGranted = it.value
                 if (isGranted){
-                    if(permissionname== Manifest.permission.MANAGE_EXTERNAL_STORAGE){
-                        Toast.makeText(this,"Permission granted for media ",Toast.LENGTH_LONG).show()
+
+                    val pickIntent = Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        openGalleryAction.launch(pickIntent)
+
                     }
+
 
                 }
             }
 
-            }
+
 
 
     private lateinit var auth: FirebaseAuth
     private lateinit var email : EditText
     private lateinit var Password: EditText
     private lateinit var cPassword: EditText
-    private lateinit var imagebtn: Button
+    private lateinit var imagebtn: ImageButton
     val selectedphotouri: Uri? = null
 
     @SuppressLint("MissingInflatedId")
+    val openGalleryAction: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+            if(result.resultCode == RESULT_OK && result.data!=null){
+//                imagebtn.setImageBitmap()
+                val uri = result.data?.data
+                val bitmap  = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+                val bitmapDrawable= BitmapDrawable(bitmap)
+                imagebtn.setImageBitmap(bitmap)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,8 +91,7 @@ class Signup : AppCompatActivity() {
 
 
         imagebtn.setOnClickListener {
-            if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(
-                    Manifest.permission.CAMERA)){
+            if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)){
                 showRationalDialog("Messenger Requires Camera permision",
                     "Camera cannot be used because Camera access is denied")
 
@@ -90,7 +103,6 @@ class Signup : AppCompatActivity() {
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE))
             }
-
 
 //            val intent = Intent(Intent.ACTION_PICK)
 //            intent.type= "image/*"
@@ -137,16 +149,16 @@ class Signup : AppCompatActivity() {
         }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode==0 && resultCode== Activity.RESULT_OK && data!=null ){
-            val uri = data.data
-            val bitmap  = MediaStore.Images.Media.getBitmap(contentResolver,uri)
-            val bitmapDrawable= BitmapDrawable(bitmap)
-            imagebtn.setBackgroundDrawable(bitmapDrawable)
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (resultCode==0 && resultCode== Activity.RESULT_OK && data!=null ){
+//            val uri = data.data
+//            val bitmap  = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+//            val bitmapDrawable= BitmapDrawable(bitmap)
+//            imagebtn.setBackgroundDrawable(bitmapDrawable)
+//        }
+//    }
 
 
 
@@ -170,7 +182,7 @@ class Signup : AppCompatActivity() {
         if (selectedphotouri==null) return
         val file = UUID.randomUUID().toString()
 
-        val ref =FirebaseStorage.getInstance().getReference("/image/$file")
+        val ref = FirebaseStorage.getInstance().getReference("/image/$file")
         ref.putFile(selectedphotouri!!)
     }
     }
