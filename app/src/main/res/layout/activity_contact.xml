@@ -4,14 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/homescreen"
     tools:context=".ContactActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="35dp">
+            <ImageView
+                android:id="@+id/Search"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:src="@drawable/search"
+                android:clickable="true"
+                android:layout_marginStart="15dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/teal_200"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Messenger"
+                android:textSize="45sp"
+                android:layout_centerInParent="true"
+                android:paddingStart="14dp"
+                style="bold"
+                android:textColor="#5EDFFF"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/User"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:src="@drawable/userback"
+                android:clickable="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/teal_200"
+                />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+            android:id="@+id/UserRecycleView"
         tools:listitem="@layout/user_layout"
 
         />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

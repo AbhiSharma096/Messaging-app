@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgcolor"
-    tools:context=".MainActivity"
+    android:background="@drawable/background"
+    tools:context=".Signin"
     tools:ignore="HardcoreText"
     >
 
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="@string/mesenger"
+            android:text="Messenger"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +39,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round"
             app:cardCornerRadius="15dp"
+            android:elevation="10dp"
+            app:cardUseCompatPadding="true"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
@@ -55,6 +57,7 @@
                     android:id="@+id/username_text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/round"
                     >
 
@@ -80,6 +83,7 @@
                 android:id="@+id/username_text_input_layout2"
                 app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round">
 
@@ -89,6 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginTop="30dp"
                     android:padding="5dp"
                     android:ems="10"
                     android:background="@drawable/round_edittext"
@@ -99,24 +104,27 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        <Button
-            android:id="@+id/signin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Sign in"
-            android:textAllCaps="false"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:textStyle="bold"
-            android:shadowColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:background="@drawable/round_button"
+                <Button
+                    android:id="@+id/signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="40dp"
+                    android:text="Sign in"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button"
 
-            />
+                    />
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
         <Button
             android:id="@+id/signup"
             android:layout_width="wrap_content"

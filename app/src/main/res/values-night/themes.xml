@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Mesenger" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Mesenger" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#293241</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,8 +14,5 @@
         <item name="android:windowTranslucentStatus">true</item>
         <!-- Customize your theme here. -->
 
-        <item name="colorControlNormal">#8d99ae</item>
-        <item name="colorControlActivated">#8d99ae</item>
-        <item name="colorControlHighlight">#8d99ae</item>
     </style>
 </resources>

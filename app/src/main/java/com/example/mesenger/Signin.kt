@@ -4,17 +4,12 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.mesenger.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import java.net.PasswordAuthentication
-import java.util.SplittableRandom
-import kotlin.math.sign
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -23,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 //val userid : String? = null
 //val password : String? = null
 
-class MainActivity : AppCompatActivity() , View.OnClickListener{
+class Signin : AppCompatActivity() , View.OnClickListener{
     private lateinit var auth: FirebaseAuth
     private lateinit var email : EditText
     private lateinit var Password: EditText
@@ -38,7 +33,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar!!.hide()
 
         signin = binding.signin
         signup = binding.signup
@@ -46,6 +41,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         email = binding.etEmail
         Password = binding.etPassword2
 
+
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null ){
+            val i = Intent(this@Signin, ContactActivity::class.java)
+            startActivity(i)
+            finish()
+        }
 
 
         signin.setOnClickListener {
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
                          if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                             cancelprogressdialog()
-                            val i = Intent(this@MainActivity, ContactActivity::class.java)
+                            val i = Intent(this@Signin, ContactActivity::class.java)
                              startActivity(i)
                              finish()
                          }    else {
@@ -73,7 +76,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
 
         signup.setOnClickListener {
             val i = Intent(
-                this@MainActivity,
+                this@Signin,
                 Signup::class.java
             )
             startActivity(i)
@@ -84,7 +87,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     private fun Showprogressdialog (){
-        customprogress= Dialog(this@MainActivity)
+        customprogress= Dialog(this@Signin)
         customprogress?.setContentView(R.layout.custom_progress)
         customprogress?.show()
 

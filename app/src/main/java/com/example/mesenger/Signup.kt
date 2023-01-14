@@ -2,40 +2,26 @@ package com.example.mesenger
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
-import android.provider.ContactsContract
-import android.provider.MediaStore
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.selects.select
-import java.net.URI
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -72,12 +58,12 @@ class Signup : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
 
-
+        var flag = 0
         backbtn = findViewById(R.id.back)
         signupbtn = findViewById(R.id.signup)
         storage = FirebaseStorage.getInstance()
         auth = Firebase.auth
-
+        supportActionBar!!.hide()
         etname = findViewById(R.id.etUsername)
         etemail = findViewById(R.id.Email)
         Password = findViewById(R.id.etPassword2)
@@ -87,12 +73,17 @@ class Signup : AppCompatActivity() {
 
 
 
+
+
+
+
         val pickphoto = registerForActivityResult(
             ActivityResultContracts.GetContent(),
             ActivityResultCallback {
                 imagebtn.setImageURI(it)
                 if (it != null) {
                     uri = it
+                    flag = 1
                 }
 
             }
@@ -123,7 +114,7 @@ class Signup : AppCompatActivity() {
                 )
             }
             pickphoto.launch("image/*")
-
+           // selectimage()
         }
 
 
@@ -142,29 +133,49 @@ class Signup : AppCompatActivity() {
                 Toast.makeText(this, "Confermation Password must be same!", Toast.LENGTH_LONG)
                     .show()
             } else {
+                if (flag == 0  ) {
+                    Toast.makeText(
+                        this,
+                        "Please select a Profile Image.",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
 
-                uploadimage()
+                } else if (etname.text.isEmpty()) {
+                    Toast.makeText(
+                        this,
+                        "Please enter a Username.",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+                else {
 
-                auth.createUserWithEmailAndPassword(edtemail, edtPassword)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
+                    auth.createUserWithEmailAndPassword(edtemail, edtPassword)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+
                             uploadimage()
-                            val i = Intent(this@Signup, ContactActivity::class.java)
-                            startActivity(i)
-                            finish()
 
-                        } else {
-                            Toast.makeText(this, "Enter Proper Email/Password.", Toast.LENGTH_LONG)
-                                .show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Enter Proper Email/Password.",
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                            }
                         }
+
                     }
+                }
             }
-        }
+
 
 
 
         backbtn.setOnClickListener {
-            val i = Intent(this@Signup, MainActivity::class.java)
+            val i = Intent(this@Signup, Signin::class.java)
             startActivity(i)
             finish()
         }
@@ -192,16 +203,28 @@ class Signup : AppCompatActivity() {
             .addOnSuccessListener { task->
                 task.metadata!!.reference!!.downloadUrl
                     .addOnSuccessListener {
-                        val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
+                        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                        etname=findViewById(R.id.etUsername)
+                        val edtemail = etemail.text.toString()
                         val mapImage = mapOf(
-                            "url" to it.toString()
+                            "url" to it.toString(),
+                           "username" to etname.text.toString(),
+                            "uid" to userId,
+                            "Email" to edtemail
+
                         )
+                        val user = User(etname.text.toString(),etemail.text.toString(),userId)
                         val databaseReference =
-                            FirebaseDatabase.getInstance().getReference(("userImages"))
+                            FirebaseDatabase.getInstance().getReference(("User"))
                         databaseReference.child(userId).setValue(mapImage)
                             .addOnSuccessListener {
-                                Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show()
+                                val i = Intent(this@Signup, ContactActivity::class.java)
+                                i.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(i)
+                                cancelprogressdialog()
+                                Toast.makeText(this,"Image Uploaded Successfully",Toast.LENGTH_SHORT).show()
                             }
                             .addOnFailureListener { error ->
 
@@ -215,14 +238,6 @@ class Signup : AppCompatActivity() {
     }
 
 
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode==100 && resultCode== RESULT_OK){
-//            uri = data?.data!!
-//            imagebtn.setImageURI(uri)
-//        }
-//    }
 
 
     private fun Showprogressdialog (){
