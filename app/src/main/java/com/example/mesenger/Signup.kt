@@ -217,7 +217,7 @@ class Signup : AppCompatActivity() {
                         val user = User(etname.text.toString(),etemail.text.toString(),userId)
                         val databaseReference =
                             FirebaseDatabase.getInstance().getReference(("User"))
-                        databaseReference.child(userId).setValue(mapImage)
+                        databaseReference.child(userId).setValue(User(edtemail,userId,it.toString(),etname.text.toString()))
                             .addOnSuccessListener {
                                 val i = Intent(this@Signup, ContactActivity::class.java)
                                 i.flags =
