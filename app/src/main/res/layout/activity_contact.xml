@@ -19,7 +19,7 @@
             android:layout_marginTop="35dp">
             <ImageView
                 android:id="@+id/Search"
-                android:layout_width="40dp"
+                android:layout_width="48dp"
                 android:layout_height="60dp"
                 android:src="@drawable/search"
                 android:clickable="true"
@@ -39,10 +39,10 @@
                 />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/User"
-                android:layout_width="40dp"
-                android:layout_height="60dp"
-                android:src="@drawable/userback"
+                android:id="@+id/UserProfilePic"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/userback"
                 android:clickable="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="15dp"
