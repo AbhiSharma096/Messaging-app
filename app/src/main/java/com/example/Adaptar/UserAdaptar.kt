@@ -38,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView
           holder.itemView.setOnClickListener {
                 val intent = Intent(context, ChatActivity::class.java)
                 intent.putExtra("name",user.username)
-                intent.putExtra("uid",FirebaseAuth.getInstance().currentUser?.uid)
+                intent.putExtra("uid",user.uid)
                 context.startActivity(intent)
           }
           Picasso.get().load(user.url).into(holder.imageUser)

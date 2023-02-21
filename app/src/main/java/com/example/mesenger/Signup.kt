@@ -39,8 +39,8 @@ class Signup : AppCompatActivity() {
     var customprogress: Dialog? =null
     private lateinit var signupbtn: Button
     private var storage = Firebase.storage
-    //
-    private val cameraandmediaResultLanture: ActivityResultLauncher<Array<String>> =
+
+    private val cameraandmediaResultLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
             permission.entries.forEach {
                 val permissionname = it.key
@@ -63,7 +63,7 @@ class Signup : AppCompatActivity() {
         signupbtn = findViewById(R.id.signup)
         storage = FirebaseStorage.getInstance()
         auth = Firebase.auth
-        supportActionBar!!.hide()
+        supportActionBar?.hide()
         etname = findViewById(R.id.etUsername)
         etemail = findViewById(R.id.Email)
         Password = findViewById(R.id.etPassword2)
@@ -103,7 +103,7 @@ class Signup : AppCompatActivity() {
 
             } else {
 
-                cameraandmediaResultLanture.launch(
+                cameraandmediaResultLauncher.launch(
                     arrayOf(
                         Manifest.permission.CAMERA,
                         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -214,10 +214,10 @@ class Signup : AppCompatActivity() {
                             "Email" to edtemail
 
                         )
-                        val user = User(etname.text.toString(),etemail.text.toString(),userId)
+                        val user = User(etemail.text.toString(),userId,it.toString(),etname.text.toString())
                         val databaseReference =
                             FirebaseDatabase.getInstance().getReference(("User"))
-                        databaseReference.child(userId).setValue(User(edtemail,userId,it.toString(),etname.text.toString()))
+                        databaseReference.child(userId).setValue(mapImage)
                             .addOnSuccessListener {
                                 val i = Intent(this@Signup, ContactActivity::class.java)
                                 i.flags =

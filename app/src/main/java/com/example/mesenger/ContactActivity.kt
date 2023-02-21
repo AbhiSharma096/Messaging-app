@@ -87,42 +87,14 @@ class ContactActivity : AppCompatActivity() {
 
         })
 
-        //get all user from firebase
-              //add to recyclerview
-        //set user image from firebase
-              //set user name from firebase
+
 
 
 
        }
 
 
-        //adaptor = UserAdaptar(this,newArraylist)
 
-
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//        newArraylist.add(User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"))
-//
-//        var userAdaptar = UserAdaptar(this, newArraylist)
-//        newRecyclerview.adapter=userAdaptar
-
-
-//        val userlist = listOf(
-//            User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174"),
-//            User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174") ,
-//            User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174") ,
-//            User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174") ,
-//            User("Abhishek Sharma","abhisheksharmabt1c@gmail.com","vb1ZHtMxAdZMWdlROShOJmYRZXz1","https://firebasestorage.googleapis.com/v0/b/mesenger-096.appspot.com/o/images%2F1673589590006?alt=media&token=4431ef98-a304-4244-bcc9-fe6786dc7174")
-//
-//        )
 
 
 
