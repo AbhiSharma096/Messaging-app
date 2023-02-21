@@ -81,6 +81,7 @@ class Signup : AppCompatActivity() {
             ActivityResultContracts.GetContent(),
             ActivityResultCallback {
                 imagebtn.setImageURI(it)
+                Toast.makeText(this, "image loaded sucessfully", Toast.LENGTH_SHORT).show()
                 if (it != null) {
                     uri = it
                     flag = 1
@@ -150,8 +151,10 @@ class Signup : AppCompatActivity() {
                         .show()
                 }
                 else {
+                    val edtemail1 = etemail.text.toString()
+                    val edtPassword1 = Password.text.toString()
 
-                    auth.createUserWithEmailAndPassword(edtemail, edtPassword)
+                    auth.createUserWithEmailAndPassword(edtemail1, edtPassword1)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
 
@@ -160,7 +163,7 @@ class Signup : AppCompatActivity() {
                             } else {
                                 Toast.makeText(
                                     this,
-                                    "Enter Proper Email/Password.",
+                                    edtPassword1,
                                     Toast.LENGTH_LONG
                                 )
                                     .show()
@@ -212,8 +215,8 @@ class Signup : AppCompatActivity() {
                            "username" to etname.text.toString(),
                             "uid" to userId,
                             "Email" to edtemail
-
                         )
+
                         val user = User(etemail.text.toString(),userId,it.toString(),etname.text.toString())
                         val databaseReference =
                             FirebaseDatabase.getInstance().getReference(("User"))

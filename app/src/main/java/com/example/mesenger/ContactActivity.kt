@@ -79,6 +79,7 @@ class ContactActivity : AppCompatActivity() {
                     userlist.add(currentuser!!)
                 }
                 adaptor.notifyDataSetChanged()
+
             }
 
             override fun onCancelled(error: DatabaseError) {

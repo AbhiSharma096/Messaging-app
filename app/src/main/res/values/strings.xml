@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Mesenger</string>
-    <string name="mesenger">Mesenger</string>
+    <string name="app_name" translatable="false">Messenger</string>
+    <string name="mesenger">Messenger</string>
     <string name="register">Register</string>
     <string name="signup">SignUp?</string>
     <string name="password">Password</string>
