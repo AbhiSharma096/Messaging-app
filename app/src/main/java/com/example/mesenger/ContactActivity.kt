@@ -36,7 +36,7 @@ class ContactActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact)
         checkifuserisLogedin()
-        supportActionBar!!.hide()
+
 
         mAuth = FirebaseAuth.getInstance()
         mDbRef= FirebaseDatabase.getInstance().getReference("User")
@@ -44,28 +44,32 @@ class ContactActivity : AppCompatActivity() {
         adaptor = UserAdaptar(this, userlist)
         newRecyclerview= findViewById(R.id.UserRecycleView)
         newRecyclerview.setHasFixedSize(true)
-        supportActionBar!!.hide()
         search = findViewById(R.id.Search)
         newRecyclerview.layoutManager = LinearLayoutManager(this)
         newRecyclerview.adapter = adaptor
         userProfilePic = findViewById(R.id.UserProfilePic)
+        supportActionBar!!.hide()
 
 
         search.setOnClickListener {
             val intent = Intent(this, NewMessages::class.java)
             startActivity(intent)
         }
-        mDbRef.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var profilepic = snapshot.child("url").value.toString()
-                Picasso.get().load(profilepic).into(userProfilePic)
-            }
+        val current = mAuth.currentUser
+              val URL = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("url")
+              URL.addValueEventListener(object : ValueEventListener{
+                  override fun onDataChange(snapshot: DataSnapshot) {
+                      var profilepic = snapshot.value.toString()
+                      Picasso.get().load(profilepic).into(userProfilePic)
+                  }
 
-            override fun onCancelled(error: DatabaseError) {
+                  override fun onCancelled(error: DatabaseError) {
 
-            }
+                  }
 
-        })
+              })
+
+
 
 
         mDbRef.addValueEventListener(object : ValueEventListener{

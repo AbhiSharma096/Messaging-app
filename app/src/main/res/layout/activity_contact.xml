@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
 
-        <RelativeLayout
+        <Toolbar
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
@@ -31,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Messenger"
+                android:layout_marginStart="20dp"
                 android:textSize="45sp"
                 android:layout_centerInParent="true"
                 android:paddingStart="14dp"
@@ -42,6 +43,7 @@
                 android:id="@+id/UserProfilePic"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/userback"
                 android:clickable="true"
                 android:layout_alignParentRight="true"
@@ -49,7 +51,7 @@
                 android:textColor="@color/teal_200"
                 />
 
-        </RelativeLayout>
+        </Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -59,6 +61,7 @@
         tools:listitem="@layout/user_layout"
 
         />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
