@@ -63,7 +63,7 @@ class Signup : AppCompatActivity() {
         signupbtn = findViewById(R.id.signup)
         storage = FirebaseStorage.getInstance()
         auth = Firebase.auth
-        supportActionBar?.hide()
+//        supportActionBar?.hide()
         etname = findViewById(R.id.etUsername)
         etemail = findViewById(R.id.Email)
         Password = findViewById(R.id.etPassword2)

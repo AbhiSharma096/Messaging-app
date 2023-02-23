@@ -48,7 +48,7 @@ class ContactActivity : AppCompatActivity() {
         newRecyclerview.layoutManager = LinearLayoutManager(this)
         newRecyclerview.adapter = adaptor
         userProfilePic = findViewById(R.id.UserProfilePic)
-        supportActionBar!!.hide()
+        //supportActionBar!!.hide()
 
 
         search.setOnClickListener {

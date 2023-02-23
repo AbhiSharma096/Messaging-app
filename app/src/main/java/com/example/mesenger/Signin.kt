@@ -33,7 +33,7 @@ class Signin : AppCompatActivity() , View.OnClickListener{
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar!!.hide()
+//        supportActionBar!!.hide()
 
         signin = binding.signin
         signup = binding.signup
