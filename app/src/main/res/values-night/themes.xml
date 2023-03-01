@@ -5,6 +5,7 @@
         <item name="colorPrimary">#293241</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">#393939</item>
 
 
         <!-- Secondary brand color. -->
@@ -12,30 +13,43 @@
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">#8d99ae</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#24243E</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
 
         <!-- Customize your theme here. -->
-
     </style>
     <style name="MYTheme_Mesenger" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#293241</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
 
 
         <!-- Secondary brand color. -->
+
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">#8d99ae</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#5EDFFF</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
 
 
         <!-- Customize your theme here. -->
 
     </style>
+    <style name="cardview" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">
+            @color/white
+        </item>
+    </style>
+
+    <style name="lineStyle" parent="Theme.AppCompat.Light">
+        <item name="colorAccent" type="color">
+            @color/white
+        </item>
+    </style>
+
 
 </resources>

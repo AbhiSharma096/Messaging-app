@@ -25,6 +25,7 @@ import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Adaptar.MessageAdaptor
+
 import com.example.mesenger.databinding.ActivityChatBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -126,7 +127,10 @@ class ChatActivity : AppCompatActivity() {
 
                   override fun onDataChange(snapshot: DataSnapshot) {
                         var profilepic = snapshot.value.toString()
-                        Picasso.get().load(profilepic).into(image)
+                        Picasso.get().load(profilepic)
+                              .fit()
+                                   .centerCrop()
+                              .into(image)
                   }
 
                   override fun onCancelled(error: DatabaseError) {
@@ -154,19 +158,25 @@ class ChatActivity : AppCompatActivity() {
                   val date = Date()
                   val messageobject = Message(message, senderuid!!, date.time)
                   val randomekey = database!!.reference.push().key
-                  val lastMsgObj = HashMap<String,Any>()
-                  lastMsgObj["lastMsg"] = messageobject.message!!
-                  lastMsgObj["lastMsgTime"] = date.time
+                  val lastMsgObj = mapOf(
+                        "lastMsg" to messageobject.message!!,
+                        "lastMsgTime" to date.time
+                  )
+//                  lastMsgObj["lastMsg"] = messageobject.message!!
+//                  lastMsgObj["lastMsgTime"] = date.time
                   database!!.reference.child("Chats").child(senderRoom!!).updateChildren(lastMsgObj)
                   database!!.reference.child("Chats").child(receiverRoom!!).updateChildren(lastMsgObj)
                   database!!.reference.child("Chats").child(senderRoom!!).child("Messages").child(randomekey!!).setValue(messageobject)
                             .addOnSuccessListener {
                                    database!!.reference.child("Chats").child(receiverRoom!!).child("Messages").child(randomekey!!).setValue(messageobject)
                                           .addOnSuccessListener {
-
                                           }
                             }
                   messageEditText.text.clear()
+
+                  database!!.reference.child("Presense").child(Recieveruid!!)
+
+
             }
 
             val handler = Handler()
@@ -198,12 +208,14 @@ class ChatActivity : AppCompatActivity() {
 
 
 
+      @SuppressLint("SuspiciousIndentation")
       override fun onResume() {
             super.onResume()
                 val uid = FirebaseAuth.getInstance().currentUser?.uid
                      database!!.reference.child("Presense").child(uid!!).setValue("Online")
       }
 
+      @SuppressLint("SuspiciousIndentation")
       override fun onPause() {
             super.onPause()
             val uid = FirebaseAuth.getInstance().currentUser?.uid

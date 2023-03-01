@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:backgroundTint="@color/colorPrimary"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:src="@drawable/userback"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:id="@+id/userimage"
+        android:layout_marginTop="38dp"
+        android:layout_marginStart="16dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abhishek Sharma"
+        android:textSize="16sp"
+        android:textStyle="bold"
+
+        android:id="@+id/name"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/userimage"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=".@Gmail.com"
+        android:textSize="11sp"
+        android:textStyle="bold"
+
+        android:id="@+id/email"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/name"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:theme="@style/lineStyle"
+
+        android:layout_below="@+id/email"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>

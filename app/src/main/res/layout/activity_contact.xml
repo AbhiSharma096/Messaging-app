@@ -1,72 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
     android:background="@drawable/homescreen"
     android:fitsSystemWindows="true"
     tools:context=".ContactActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-            <androidx.appcompat.widget.Toolbar
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/topappbar"
+            android:layout_height="wrap_content">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-
-                >
-                <ImageView
-                    android:id="@+id/Search"
-                    android:layout_width="48dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/search"
-                    android:clickable="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_alignParentLeft="true"
-                    android:textColor="@color/teal_200"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Messenger"
-                    android:layout_marginStart="20dp"
-                    android:textSize="45sp"
-                    android:layout_centerInParent="true"
-                    android:paddingStart="14dp"
-                    style="bold"
-                    android:textColor="#5EDFFF"
-                    />
-
+                app:title="Messenger"
+                app:navigationIcon="@drawable/baseline_menu_24"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/userback"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="22dp"
                     android:id="@+id/UserProfilePic"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="30dp"
-                    android:background="@drawable/userback"
-                    android:clickable="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="15dp"
-                    android:textColor="@color/teal_200"
                     />
+            </com.google.android.material.appbar.MaterialToolbar>
 
-            </androidx.appcompat.widget.Toolbar>
 
 
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topappbar"
             android:id="@+id/UserRecycleView"
-        tools:listitem="@layout/user_layout"
+            tools:listitem="@layout/user_layout"
 
-        />
+            />
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/my_navigation_item"
+        android:layout_gravity="start"/>
 
-    </LinearLayout>
 
-</RelativeLayout>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
