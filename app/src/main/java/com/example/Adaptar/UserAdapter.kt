@@ -45,8 +45,8 @@ class UserAdapter(private val context: Context, private val userlist: ArrayList<
             // Read the value of the last message from the database and display it in the UI.
             lastMessageRef.addValueEventListener(object : ValueEventListener {
                   override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val lastMessage = dataSnapshot.getValue(String::class.java)
-                        holder.latestMessage.text = lastMessage ?: "No message"
+
+                        holder.latestMessage.text  = dataSnapshot.getValue(String::class.java) ?: "No message"
                   }
 
                   override fun onCancelled(databaseError: DatabaseError) {

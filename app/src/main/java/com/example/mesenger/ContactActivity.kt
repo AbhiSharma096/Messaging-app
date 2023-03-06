@@ -2,9 +2,11 @@ package com.example.mesenger
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,12 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Adaptar.UserAdapter
 
-import com.example.mesenger.databinding.ActivityContactBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 //import com.example.mesenger.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import io.supercharge.shimmerlayout.ShimmerLayout
@@ -32,9 +37,7 @@ class ContactActivity : AppCompatActivity() {
     private lateinit var mDbRef: DatabaseReference
     private lateinit var userlist: ArrayList<User>
     private lateinit var adaptor: UserAdapter
-    private lateinit var binding: ActivityContactBinding
     private lateinit var userProfilePic : CircleImageView
-    private lateinit var profilepic : CircleImageView
     private lateinit var shimmerlayout : ShimmerLayout
     private lateinit var textView: TextView
 
@@ -45,7 +48,7 @@ class ContactActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact)
-        checkifuserisLogedin()
+        `checklistsLoge-din`()
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -87,6 +90,44 @@ class ContactActivity : AppCompatActivity() {
                 }
                 true
         }
+          Firebase.messaging.subscribeToTopic("${mAuth.currentUser!!.uid}")
+                .addOnCompleteListener { task ->
+                      var msg = "Subscribed"
+                      if (!task.isSuccessful) {
+                            msg = "Subscribe failed"
+                      }
+                      Log.d(TAG, msg)
+                      Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                }
+
+//          var token :String? = null
+//          val getToken = FirebaseDatabase.getInstance().getReference("User").child(mAuth.currentUser!!.uid).child("token")
+//               getToken.addValueEventListener(object : ValueEventListener{
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                      if (snapshot.exists()) {
+//                            token = snapshot.getValue(String::class.java)
+//                            var lol = token
+//                            Firebase.messaging.subscribeToTopic(mAuth.currentUser!!.uid)
+//                                  .addOnCompleteListener { task ->
+//                                        var msg = "Subscribed"
+//                                        if (!task.isSuccessful) {
+//                                              msg = "Subscribe failed"
+//                                        }
+//                                        Log.d(TAG, msg)
+//                                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//                                  }
+//                            Toast.makeText(this@ContactActivity, token, Toast.LENGTH_SHORT).show()
+//                      }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//
+//                }
+//
+//               })
+
+
+
 
 
 
@@ -174,10 +215,11 @@ class ContactActivity : AppCompatActivity() {
                 userlist.clear()
                 for (postSnapshot in snapshot.children){
                     val currentuser = postSnapshot.getValue(User::class.java)
-                    if (mAuth.currentUser!!.uid == currentuser!!.uid)
+                    if (mAuth.currentUser!!.uid.toString() == currentuser!!.uid.toString())
                         continue
                     userlist.add(currentuser!!)
                 }
+                  // Shimmer layout stop
                 shimmerlayout.stopShimmerAnimation()
                 shimmerlayout.isVisible = false
                 newRecyclerview.isVisible = true
@@ -212,7 +254,7 @@ class ContactActivity : AppCompatActivity() {
 
 
 
-    private fun checkifuserisLogedin() {
+    private fun `checklistsLoge-din`() {
         val uri = FirebaseAuth.getInstance().uid
         if (uri == null ){
             val i = Intent(this, Signin::class.java)

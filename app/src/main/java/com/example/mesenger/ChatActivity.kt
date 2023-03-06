@@ -10,12 +10,12 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Adaptar.MessageAdaptor
 import com.example.mesenger.databinding.ActivityChatBinding
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -36,6 +36,9 @@ class ChatActivity : AppCompatActivity() {
       var database: FirebaseDatabase? = null
       var storage : FirebaseStorage? = null
       var dialog : ProgressDialog? = null
+      var Token : String ? = null
+      var isAppRunning : Boolean = false
+      var userStatus : String ? = null
 
 
 
@@ -43,7 +46,7 @@ class ChatActivity : AppCompatActivity() {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_chat)
             setTheme(R.style.MYTheme_Mesenger)
-//            supportActionBar!!.hide()
+
 
             val name = intent.getStringExtra("name")
             val Recieveruid = intent.getStringExtra("uid")
@@ -61,7 +64,6 @@ class ChatActivity : AppCompatActivity() {
             messageEditText = findViewById(R.id.MessageEditText)
             sendButton = findViewById(R.id.SendButton)
             messagelist = ArrayList()
-            //FirebaseMessaging.getInstance().subscribeToTopic("all")
             messageAdaptor = MessageAdaptor(this, messagelist,senderRoom!!,receiverRoom!!)
             messageRecyclerView.layoutManager = LinearLayoutManager(this)
             messageRecyclerView.adapter = messageAdaptor
@@ -131,19 +133,40 @@ class ChatActivity : AppCompatActivity() {
             })
 
 
+            val token = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("token")
+                token.addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                              if (snapshot.exists()){
+                                    Token = snapshot.value.toString()
+                              Toast.makeText(this@ChatActivity, Token, Toast.LENGTH_SHORT).show()}
+                              else
+                                          Toast.makeText(this@ChatActivity, "Token not found", Toast.LENGTH_SHORT).show()
+
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+
+
+
+                        }
+
+
+                })
+
 
 
 
             Reciever.text = name
             val URL = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("url")
-
             URL.addValueEventListener(object : ValueEventListener{
 
                   override fun onDataChange(snapshot: DataSnapshot) {
                         var profilepic = snapshot.value.toString()
                         Picasso.get().load(profilepic)
                               .fit()
-                                   .centerCrop()
+                              .centerCrop()
                               .into(image)
                   }
 
@@ -160,12 +183,11 @@ class ChatActivity : AppCompatActivity() {
 
 
             val back : ImageView = findViewById(R.id.backButton)
-
-
-
             back.setOnClickListener {
                   OnBackPressed()
             }
+
+
 
             sendButton.setOnClickListener {
                   val message = messageEditText.text.toString()
@@ -176,32 +198,41 @@ class ChatActivity : AppCompatActivity() {
                         "lastMsg" to messageobject.message!!,
                         "lastMsgTime" to date.time
                   )
-
+                  val notificationSender: FmcNotificationSender = FmcNotificationSender(
+                        "/topics/$Recieveruid",
+                        Name1 + " sent you a message",
+                        message,
+                        this@ChatActivity,
+                        this@ChatActivity
+                  )
+                  if (Token == null){
+                        Toast.makeText(this, "Token is null", Toast.LENGTH_SHORT).show()
+                  }
 
                   database!!.reference.child("Presense").child(Recieveruid!!).addValueEventListener(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
                               if (snapshot.exists()){
                                     val Status = snapshot.getValue(String::class.java)
                                     if (Status == "Offline"){
-                                          val notificationSender: FmcNotificationSender = FmcNotificationSender(
-                                                "/topics/all",
-                                                Name1 + " sent you a message",
-                                                message,
-                                                this@ChatActivity,
-                                                this@ChatActivity
-                                          )
-                                          notificationSender.SendNotifications()
-
+                                          setvalue()
                                     }else{
 
                                     }
                               }
                         }
 
+                        private fun setvalue() {
+                              userStatus = "Offline"
+                        }
+
                         override fun onCancelled(error: DatabaseError) {
 
                         }
                   })
+
+                       if (userStatus == "Offline"){
+                            notificationSender.SendNotifications()
+                       }
 
 
 
@@ -274,6 +305,7 @@ class ChatActivity : AppCompatActivity() {
             super.onResume()
                 val uid = FirebaseAuth.getInstance().currentUser?.uid
                      database!!.reference.child("Presense").child(uid!!).setValue("Online")
+                isAppRunning = true
       }
 
       @SuppressLint("SuspiciousIndentation")
@@ -281,6 +313,7 @@ class ChatActivity : AppCompatActivity() {
             super.onPause()
             val uid = FirebaseAuth.getInstance().currentUser?.uid
                 database!!.reference.child("Presense").child(uid!!).setValue("Offline")
+            isAppRunning = false
       }
 
 
@@ -293,4 +326,5 @@ class ChatActivity : AppCompatActivity() {
 
 
 }
+
 

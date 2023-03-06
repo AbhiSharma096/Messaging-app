@@ -1,23 +1,26 @@
 package com.example.mesenger
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.os.Vibrator
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.util.*
+import androidx.annotation.RequiresApi as RequiresApi1
+
 
 
 class FirebaseMessagingServices : FirebaseMessagingService() {
     var mNotificationManager: NotificationManager? = null
-    @RequiresApi(Build.VERSION_CODES.S)
+    @SuppressLint("DiscouragedApi")
+    @RequiresApi1(Build.VERSION_CODES.S)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
@@ -42,7 +45,7 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
         )
 
         val intent = Intent( this, ChatActivity::class.java)
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
               val pendingIntent = PendingIntent.getActivity(
               applicationContext, 0 /* Request code */, intent,
@@ -54,8 +57,8 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
             .setOnlyAlertOnce(true)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
-            .setContentTitle(remoteMessage!!.notification!!.title!!)
-            .setContentText(remoteMessage!!.notification!!.body!!)
+            .setContentTitle(remoteMessage.notification!!.title!!)
+            .setContentText(remoteMessage.notification!!.body!!)
             .setSmallIcon(resourceImage)
 
         mNotificationManager =
@@ -65,7 +68,7 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
             val channel = NotificationChannel(
                 channelId,
                 "Channel human readable title",
-                NotificationManager.IMPORTANCE_HIGH
+                NotificationManager.IMPORTANCE_DEFAULT
             )
             mNotificationManager!!.createNotificationChannel(channel)
             builder.setChannelId(channelId)

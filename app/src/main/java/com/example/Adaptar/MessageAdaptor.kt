@@ -169,10 +169,7 @@ class MessageAdaptor(val context:Context,val messages: List<com.example.mesenger
             val sentMessage: TextView = itemView.findViewById<TextView>(R.id.txtsend_message)
             val sentTime: TextView = itemView.findViewById<TextView>(R.id.time)
       }
-      class againreceivedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-            val reciveMessage: TextView = itemView.findViewById<TextView>(R.id.txtrecieved_message)
-            val sentTime: TextView = itemView.findViewById<TextView>(R.id.time)
-      }
+
       class receivedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             val reciveMessage: TextView = itemView.findViewById<TextView>(R.id.txtrecieved_message)
             val sentTime: TextView = itemView.findViewById<TextView>(R.id.time)

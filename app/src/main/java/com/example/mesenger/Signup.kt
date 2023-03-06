@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -16,10 +17,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.util.*
@@ -36,6 +39,7 @@ class Signup : AppCompatActivity() {
     private lateinit var imagebtn: ImageView
     private lateinit var backbtn: Button
     private lateinit var uri: Uri
+    private lateinit var token: String
     var customprogress: Dialog? =null
     private lateinit var signupbtn: Button
     private var storage = Firebase.storage
@@ -71,6 +75,25 @@ class Signup : AppCompatActivity() {
         imagebtn = findViewById(R.id.imagebutton)
         val name = etname.text.toString()
 
+
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            token = task.result
+
+            // Log and toast
+            val msg = token
+            if (msg != null) {
+                Log.d("TAG", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
 
 
@@ -128,46 +151,32 @@ class Signup : AppCompatActivity() {
 
 
             if (edtemail.isEmpty() || edtPassword.isEmpty()) {
+
                 Toast.makeText(this, "Please enter email/password !", Toast.LENGTH_SHORT).show()
-            } else if (cpassword != edtPassword) {
+            }
+            else if (cpassword != edtPassword)
+            {
                 // Check Weather both of the entered password are same or not
                 Toast.makeText(this, "Confermation Password must be same!", Toast.LENGTH_LONG)
                     .show()
-            } else {
+            }
+            else
+            {
                 if (flag == 0  ) {
-                    Toast.makeText(
-                        this,
-                        "Please select a ProfileActivity Image.",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+                    Toast.makeText(this, "Please select a ProfileActivity Image.", Toast.LENGTH_LONG).show()
 
                 } else if (etname.text.isEmpty()) {
-                    Toast.makeText(
-                        this,
-                        "Please enter a Username.",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
-                else {
+                    Toast.makeText(this, "Please enter a Username.", Toast.LENGTH_LONG).show()
+
+                } else {
                     val edtemail1 = etemail.text.toString()
                     val edtPassword1 = Password.text.toString()
 
                     auth.createUserWithEmailAndPassword(edtemail1, edtPassword1)
                         .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
 
-                            uploadimage()
-
-                            } else {
-                                Toast.makeText(
-                                    this,
-                                    edtPassword1,
-                                    Toast.LENGTH_LONG
-                                )
-                                    .show()
-                            }
+                            if (task.isSuccessful) { uploadimage() }
+                            else { Toast.makeText(this, edtPassword1, Toast.LENGTH_LONG).show() }
                         }
 
                     }
@@ -188,19 +197,7 @@ class Signup : AppCompatActivity() {
     private fun uploadimage() {
 
           Showprogressdialog()
-//        val formatter = SimpleDateFormat("DD/MM/yyyy", Locale.getDefault())
-//        val now = Date()
-//        val filename = formatter.format(now)
-//        val storagRefrence = FirebaseStorage.getInstance().getReference("images/$filename")
-//
-//
-//        storagRefrence.putFile(uri).addOnSuccessListener {
-//            Toast.makeText(this, "Enter Proper Email/Password.", Toast.LENGTH_LONG)
-//                .show()
-//
-//        }.addOnFailureListener {
-//
-//        }
+
         storage.getReference("images").child(System.currentTimeMillis().toString())
             .putFile(uri)
             .addOnSuccessListener { task->
@@ -214,19 +211,17 @@ class Signup : AppCompatActivity() {
                             "url" to it.toString(),
                            "username" to etname.text.toString(),
                             "uid" to userId,
-                            "Email" to edtemail
+                            "Email" to edtemail,
+                            "token" to token
                         )
-
-                        val user = User(etemail.text.toString(),userId,it.toString(),etname.text.toString())
-                        val databaseReference =
-                            FirebaseDatabase.getInstance().getReference(("User"))
-                        databaseReference.child(userId).setValue(mapImage)
+                        val databaseReference = FirebaseDatabase.getInstance().getReference(("User"))
+                            databaseReference.child(userId).setValue(mapImage)
                             .addOnSuccessListener {
                                 val i = Intent(this@Signup, ContactActivity::class.java)
-                                i.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 startActivity(i)
                                 cancelprogressdialog()
+
                                 Toast.makeText(this,"Image Uploaded Successfully",Toast.LENGTH_SHORT).show()
                             }
                             .addOnFailureListener { error ->
@@ -234,10 +229,7 @@ class Signup : AppCompatActivity() {
                                 Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
                             }
                     }
-
             }
-
-
     }
 
 
