@@ -13,7 +13,6 @@ import com.example.mesenger.R
 import com.example.mesenger.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-
 import de.hdodenhof.circleimageview.CircleImageView
 
 class UserAdapter(private val context: Context, private val userlist: ArrayList<User>) :

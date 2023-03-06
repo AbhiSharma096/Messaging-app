@@ -2,36 +2,26 @@ package com.example.mesenger
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.ContentValues.TAG
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.provider.ContactsContract.Profile
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Adaptar.MessageAdaptor
-
 import com.example.mesenger.databinding.ActivityChatBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import java.util.Date
+import java.util.*
+
 
 class ChatActivity : AppCompatActivity() {
       private lateinit var messageRecyclerView : RecyclerView
@@ -58,6 +48,8 @@ class ChatActivity : AppCompatActivity() {
             val name = intent.getStringExtra("name")
             val Recieveruid = intent.getStringExtra("uid")
             val senderuid = FirebaseAuth.getInstance().currentUser?.uid
+            val Sendername = FirebaseAuth.getInstance().currentUser
+            val sendername1 = FirebaseDatabase.getInstance().getReference("User").child(senderuid!!).child("name").toString()
             val image: ImageView = findViewById(R.id.RecieverProfilepic)
             val Reciever : TextView = findViewById(R.id.RecieverName)
             mDataBase = FirebaseDatabase.getInstance().getReference()
@@ -69,11 +61,33 @@ class ChatActivity : AppCompatActivity() {
             messageEditText = findViewById(R.id.MessageEditText)
             sendButton = findViewById(R.id.SendButton)
             messagelist = ArrayList()
-
+            //FirebaseMessaging.getInstance().subscribeToTopic("all")
             messageAdaptor = MessageAdaptor(this, messagelist,senderRoom!!,receiverRoom!!)
             messageRecyclerView.layoutManager = LinearLayoutManager(this)
             messageRecyclerView.adapter = messageAdaptor
             val status = findViewById<TextView>(R.id.status)
+            val current = FirebaseAuth.getInstance().currentUser
+            var Name1 = ""
+
+
+
+
+            val Name = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("username")
+            Name.addValueEventListener(object : ValueEventListener{
+                  override fun onDataChange(snapshot: DataSnapshot) {
+                         Name1 = snapshot.value.toString()
+
+                  }
+
+                  override fun onCancelled(error: DatabaseError) {
+
+                  }
+
+            })
+
+
+
+
 
             database!!.reference.child("Presense").child(Recieveruid!!).addValueEventListener(object : ValueEventListener{
                   override fun onDataChange(snapshot: DataSnapshot) {
@@ -162,6 +176,52 @@ class ChatActivity : AppCompatActivity() {
                         "lastMsg" to messageobject.message!!,
                         "lastMsgTime" to date.time
                   )
+
+
+                  database!!.reference.child("Presense").child(Recieveruid!!).addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                              if (snapshot.exists()){
+                                    val Status = snapshot.getValue(String::class.java)
+                                    if (Status == "Offline"){
+                                          val notificationSender: FmcNotificationSender = FmcNotificationSender(
+                                                "/topics/all",
+                                                Name1 + " sent you a message",
+                                                message,
+                                                this@ChatActivity,
+                                                this@ChatActivity
+                                          )
+                                          notificationSender.SendNotifications()
+
+                                    }else{
+
+                                    }
+                              }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+                  })
+
+
+
+
+//                  if(messageEditText.text.isEmpty()){
+//                        return@setOnClickListener
+//                  }
+//                  else if( )
+//                        run {
+//                              val notificationSender: FmcNotificationSender = FmcNotificationSender(
+//                                    "/topics/all",
+//                                    "New Message",
+//                                    message,
+//                                    this,
+//                                    this
+//                              )
+//                                   notificationSender.SendNotifications()
+//
+//                        }
+
 //                  lastMsgObj["lastMsg"] = messageobject.message!!
 //                  lastMsgObj["lastMsgTime"] = date.time
                   database!!.reference.child("Chats").child(senderRoom!!).updateChildren(lastMsgObj)
@@ -199,7 +259,8 @@ class ChatActivity : AppCompatActivity() {
                   }
 
             })
-//            supportActionBar!!.setDisplayShowTitleEnabled(false)
+
+
 
 
 

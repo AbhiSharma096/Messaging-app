@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E91E63</color>
     <color name="colorPrimary">#5EDFFF</color>
+    <color name="ripplecolor">#3C63FE</color>
 </resources>

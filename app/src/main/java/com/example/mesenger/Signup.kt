@@ -137,7 +137,7 @@ class Signup : AppCompatActivity() {
                 if (flag == 0  ) {
                     Toast.makeText(
                         this,
-                        "Please select a Profile Image.",
+                        "Please select a ProfileActivity Image.",
                         Toast.LENGTH_LONG
                     )
                         .show()

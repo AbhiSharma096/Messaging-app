@@ -1,30 +1,29 @@
 package com.example.mesenger
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Adaptar.UserAdapter
+
 import com.example.mesenger.databinding.ActivityContactBinding
-import com.example.mesenger.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
-
 //import com.example.mesenger.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import io.supercharge.shimmerlayout.ShimmerLayout
 
 class ContactActivity : AppCompatActivity() {
 
@@ -36,11 +35,13 @@ class ContactActivity : AppCompatActivity() {
     private lateinit var binding: ActivityContactBinding
     private lateinit var userProfilePic : CircleImageView
     private lateinit var profilepic : CircleImageView
+    private lateinit var shimmerlayout : ShimmerLayout
+    private lateinit var textView: TextView
 
 
 
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact)
@@ -53,12 +54,19 @@ class ContactActivity : AppCompatActivity() {
         adaptor = UserAdapter(this, userlist)
         newRecyclerview= findViewById(R.id.UserRecycleView)
         newRecyclerview.setHasFixedSize(true)
+        shimmerlayout = findViewById(R.id.Shimmer)
+        shimmerlayout.startShimmerAnimation()
         val materialtoolbar :MaterialToolbar = findViewById(R.id.toolbar)
         val drawerlayout : DrawerLayout = findViewById(R.id.drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
+          var animator : ValueAnimator? = null
         newRecyclerview.layoutManager = LinearLayoutManager(this)
         newRecyclerview.adapter = adaptor
         userProfilePic = findViewById(R.id.UserProfilePic)
+          textView = findViewById(R.id.NewChat)
+        val imageview = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.userimage)
+        val name = navigationView.getHeaderView(0).findViewById<TextView>(R.id.name)
+        val email = navigationView.getHeaderView(0).findViewById<TextView>(R.id.email)
 
         //supportActionBar!!.hide()
 
@@ -84,6 +92,30 @@ class ContactActivity : AppCompatActivity() {
 
 
             val current = mAuth.currentUser
+        val Name = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("username")
+              Name.addValueEventListener(object : ValueEventListener{
+              override fun onDataChange(snapshot: DataSnapshot) {
+                     var Name1 = snapshot.value.toString()
+                     name.text = Name1
+              }
+
+              override fun onCancelled(error: DatabaseError) {
+
+              }
+
+              })
+        val Email = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("Email")
+              Email.addValueEventListener(object : ValueEventListener{
+              override fun onDataChange(snapshot: DataSnapshot) {
+                     var Email = snapshot.value.toString()
+                     email.text = Email
+              }
+
+              override fun onCancelled(error: DatabaseError) {
+
+              }
+
+              })
         val URL = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("url")
         URL.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -92,6 +124,8 @@ class ContactActivity : AppCompatActivity() {
                     .fit()
                     .centerInside()
                     .into(userProfilePic)
+
+                     Picasso.get().load(profilepic).fit().centerInside().into(imageview)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -101,9 +135,40 @@ class ContactActivity : AppCompatActivity() {
         })
 
 
+        // Open profile activity
+              userProfilePic.setOnClickListener {
+              val intent = Intent(this, ProfileActivity::class.java)
+              startActivity(intent)
+              }
+              imageview.setOnClickListener {
+              val intent = Intent(this, ProfileActivity::class.java)
+              startActivity(intent)
+              }
+              name.setOnClickListener {
+              val intent = Intent(this, ProfileActivity::class.java)
+              startActivity(intent)
+              }
 
 
-        mDbRef.addValueEventListener(object : ValueEventListener{
+          newRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+              override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                  super.onScrolled(recyclerView, dx, dy)
+                  if (dy > 0){
+                      if (animator == null){
+                          animator = createAnimator()
+                          animator!!.start()
+                      }
+                  }else{
+                      if (animator != null){
+                          animator!!.reverse()
+                          animator = null
+                      }
+                  }
+              }
+          })
+
+
+          mDbRef.addValueEventListener(object : ValueEventListener{
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 userlist.clear()
@@ -113,6 +178,9 @@ class ContactActivity : AppCompatActivity() {
                         continue
                     userlist.add(currentuser!!)
                 }
+                shimmerlayout.stopShimmerAnimation()
+                shimmerlayout.isVisible = false
+                newRecyclerview.isVisible = true
                 adaptor.notifyDataSetChanged()
 
             }
@@ -128,6 +196,19 @@ class ContactActivity : AppCompatActivity() {
 
 
     }
+
+      private fun createAnimator(): ValueAnimator{
+            val initsize = textView.measuredWidth
+            val animator = ValueAnimator.ofInt(initsize, 0)
+            animator.duration = 600
+                animator.addUpdateListener {
+                      val value = it.animatedValue as Int
+                      val params = textView.layoutParams
+                      params.width = value
+                      textView.requestLayout()
+                }
+            return animator
+      }
 
 
 

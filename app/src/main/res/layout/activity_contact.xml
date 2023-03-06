@@ -40,15 +40,77 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topappbar"
+            android:id="@+id/Shimmer">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:orientation="vertical">
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+
+
+            </LinearLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/topappbar"
+            android:visibility="gone"
             android:id="@+id/UserRecycleView"
             tools:listitem="@layout/user_layout"
 
             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/floating_button"
+            android:layout_alignParentBottom="true"
+            android:padding="16dp"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_message_24"
+                />
+
+
+            <TextView
+                android:id="@+id/NewChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingEnd="12dp"
+                android:maxHeight="20dp"
+                android:textColor="@color/white"
+                android:text="New Chat"
+                android:textSize="16sp"
+                 />
+        </LinearLayout>
     </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

@@ -17,7 +17,6 @@
         android:text="Abhishek Sharma"
         android:textSize="16sp"
         android:textStyle="bold"
-
         android:id="@+id/name"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
@@ -28,7 +27,6 @@
         android:text=".@Gmail.com"
         android:textSize="11sp"
         android:textStyle="bold"
-
         android:id="@+id/email"
         android:layout_marginTop="3dp"
         android:layout_marginStart="16dp"
