@@ -97,7 +97,7 @@ class ContactActivity : AppCompatActivity() {
                             msg = "Subscribe failed"
                       }
                       Log.d(TAG, msg)
-                      Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                     // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                 }
 
 //          var token :String? = null

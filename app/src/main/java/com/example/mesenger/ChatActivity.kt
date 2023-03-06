@@ -133,27 +133,27 @@ class ChatActivity : AppCompatActivity() {
             })
 
 
-            val token = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("token")
-                token.addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                              if (snapshot.exists()){
-                                    Token = snapshot.value.toString()
-                              Toast.makeText(this@ChatActivity, Token, Toast.LENGTH_SHORT).show()}
-                              else
-                                          Toast.makeText(this@ChatActivity, "Token not found", Toast.LENGTH_SHORT).show()
-
-
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-
-
-
-
-                        }
-
-
-                })
+//            val token = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("token")
+//                token.addValueEventListener(object : ValueEventListener{
+//                        override fun onDataChange(snapshot: DataSnapshot) {
+//                              if (snapshot.exists()){
+//                                    Token = snapshot.value.toString()
+//                              Toast.makeText(this@ChatActivity, Token, Toast.LENGTH_SHORT).show()}
+//                              else
+//                                          Toast.makeText(this@ChatActivity, "Token not found", Toast.LENGTH_SHORT).show()
+//
+//
+//                        }
+//
+//                        override fun onCancelled(error: DatabaseError) {
+//
+//
+//
+//
+//                        }
+//
+//
+//                })
 
 
 
@@ -205,9 +205,9 @@ class ChatActivity : AppCompatActivity() {
                         this@ChatActivity,
                         this@ChatActivity
                   )
-                  if (Token == null){
-                        Toast.makeText(this, "Token is null", Toast.LENGTH_SHORT).show()
-                  }
+//                  if (Token == null){
+//                        Toast.makeText(this, "Token is null", Toast.LENGTH_SHORT).show()
+//                  }
 
                   database!!.reference.child("Presense").child(Recieveruid!!).addValueEventListener(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
