@@ -1,13 +1,13 @@
 # Messaging-app
-#Kotlin Messaging App with Firebase Backend
+##Kotlin Messaging App with Firebase Backend
 This is a messaging app built using Kotlin programming language and Firebase backend. With this app, users can sign up using their email and password, upload their profile picture, and start chatting with other users who have signed up on the app.
 
-Features
+##Features
 User authentication with Firebase email and password
 Profile picture upload functionality
 Real-time messaging with Firebase
 Push notification support
-Installation
+####Installation
 Clone the repository from GitHub:
 bash
 Copy code
