@@ -12,7 +12,7 @@
 
 ``` bash
 
-git clone https://github.com/your-username/kotlin-messaging-app.git
+git clone https://github.com/AbhiSharma096/Messaging-app.git
 ````
 1. Open the project in Android Studio.
 
