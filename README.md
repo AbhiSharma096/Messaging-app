@@ -21,9 +21,9 @@ git clone https://github.com/your-username/kotlin-messaging-app.git
 3. Build and run the app on an emulator or physical device.
 
 ### Usage
-When you open the app, you will be prompted to sign up or log in. Once you have signed up or logged in, you can upload your profile picture by clicking on the profile picture icon in the top right corner of the app.
+When you open the app, you will be prompted to sign up or log in. when you are signing up, you can upload your profile picture by clicking on the profile picture icon in the top of the app.
 
-To start a new conversation with another user, click on the plus icon in the bottom right corner of the app and enter the email address of the user you want to chat with. Once the user accepts your request, you can start chatting with them in real-time.
+To start a new conversation with another user, click on the user icon in the app. Once the user accepts your request, you can start chatting with them in real-time.
 
 You will receive push notifications when you receive a new message from another user.
 
@@ -31,7 +31,7 @@ You will receive push notifications when you receive a new message from another 
 If you would like to contribute to the project, please fork the repository and submit a pull request with your changes.
 
 Credits
-This app was built by [Your Name] and is licensed under the MIT License. The app uses the following open-source libraries:
+This app was built by __Abhishek Sharma__ . The app uses the following open-source libraries:
 
 - Firebase Auth
 - Firebase Realtime Database
