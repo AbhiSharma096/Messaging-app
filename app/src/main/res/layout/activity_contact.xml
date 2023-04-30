@@ -75,6 +75,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/topappbar"
             android:visibility="gone"
+            android:verticalScrollbarPosition="right"
             android:id="@+id/UserRecycleView"
             tools:listitem="@layout/user_layout"
 
@@ -89,13 +90,14 @@
             android:background="@drawable/floating_button"
             android:layout_alignParentBottom="true"
             android:padding="16dp"
+            android:id="@+id/floatingButton"
             android:clickable="true"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/baseline_message_24"
+                android:src="@drawable/chatgpt"
                 />
 
 
@@ -104,10 +106,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
+                android:paddingTop="3dp"
                 android:paddingEnd="12dp"
                 android:maxHeight="20dp"
                 android:textColor="@color/white"
-                android:text="New Chat"
+                android:text="ChatGPT"
                 android:textSize="16sp"
                  />
         </LinearLayout>

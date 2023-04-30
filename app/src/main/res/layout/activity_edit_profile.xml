@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="#5EDFFF"
+        android:minHeight="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:clickable="true"
+                android:id="@+id/backButton"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:src="@drawable/baseline_keyboard_backspace_24"
+                android:layout_height="60dp"
+                app:tint="@color/white" />
+            <TextView
+                android:id="@+id/RecieverName"
+                android:layout_width="wrap_content"
+                android:text="Profile"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:textStyle="bold|normal"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/Profilepic"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/userback"
+        android:layout_below="@+id/toolbar"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round"
+        app:cardCornerRadius="25dp"
+        android:elevation="10dp"
+        android:layout_below="@+id/Profilepic"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Name : "
+                    android:textSize="20sp"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/black"
+                    />
+                <EditText
+                    android:id="@+id/Profile_Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="18sp"
+                    android:shadowDx="@integer/material_motion_duration_long_2"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+
+
+            <view class="android.widget.RelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="7dp"
+                android:background="#AEAEAE"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Email : "
+                    android:textSize="20sp"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/black"
+                    />
+                <EditText
+                    android:id="@+id/Profile_Email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="18sp"
+                    android:shadowDx="@integer/material_motion_duration_long_2"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+
+
+            <view class="android.widget.RelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="7dp"
+                android:background="#AEAEAE"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Username : "
+                    android:textSize="20sp"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/black"
+                    />
+                <EditText
+                    android:id="@+id/Profile_Username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="18sp"
+                    android:shadowDx="@integer/material_motion_duration_long_2"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+
+
+            <view class="android.widget.RelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="7dp"
+                android:background="#AEAEAE"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Phone no. : "
+                    android:textSize="20sp"
+                    android:layout_marginBottom="15dp"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/black"
+                    />
+                <EditText
+                    android:id="@+id/PhNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="18sp"
+                    android:shadowDx="@integer/material_motion_duration_long_2"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:id="@+id/edit_Profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/floating_button"
+        android:layout_alignParentBottom="true"
+        android:padding="16dp"
+        android:clickable="true"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/white"
+            android:text="Save"
+            android:textSize="20sp"
+            />
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/baseline_save_24"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

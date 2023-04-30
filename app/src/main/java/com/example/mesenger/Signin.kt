@@ -29,8 +29,8 @@ class Signin : AppCompatActivity() , View.OnClickListener{
     private lateinit var signin: Button
     private lateinit var signup: Button
     private lateinit var binding: ActivityMainBinding
-    var customprogress: Dialog? =null
-       var token : String? = null
+    private var customprogress: Dialog? =null
+    private var token : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

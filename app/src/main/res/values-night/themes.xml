@@ -6,6 +6,8 @@
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorAccent">#393939</item>
+        <item name="colorOnSurface">#343541</item>
+
 
 
         <!-- Secondary brand color. -->
@@ -22,7 +24,7 @@
         <item name="colorPrimary">#293241</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurface">#333333</item>
 
 
         <!-- Secondary brand color. -->
@@ -49,6 +51,9 @@
         <item name="colorAccent" type="color">
             @color/white
         </item>
+    </style>
+    <style name="ChatGptTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor" >@color/ChatGptGreen</item>
     </style>
 
 

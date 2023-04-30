@@ -1,9 +1,11 @@
 package com.example.mesenger
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mesenger.R
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +26,7 @@ class ProfileActivity : AppCompatActivity() {
        private lateinit var database : FirebaseDatabase
        private lateinit var userProfilePic : CircleImageView
        private lateinit var backbtn : ImageView
+       private lateinit var edit : LinearLayout
 
       @SuppressLint("MissingInflatedId")
       override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,8 @@ class ProfileActivity : AppCompatActivity() {
             phone = findViewById(R.id.PhNo)
             userProfilePic = findViewById(R.id.Profilepic)
             backbtn = findViewById(R.id.backButton)
+            edit = findViewById(R.id.edit_Profile)
+
             val current = auth.currentUser
 
 
@@ -67,6 +72,10 @@ class ProfileActivity : AppCompatActivity() {
 
             backbtn.setOnClickListener {
                   finish()
+            }
+            edit.setOnClickListener {
+                  val intent = Intent(this,EditProfile::class.java)
+                       startActivity(intent)
             }
 
             val URL = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("url")

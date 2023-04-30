@@ -20,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import okhttp3.*
 import java.util.*
+
 
 
 class ChatActivity : AppCompatActivity() {
@@ -42,6 +44,8 @@ class ChatActivity : AppCompatActivity() {
 
 
 
+
+      @SuppressLint("MissingInflatedId")
       override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_chat)
@@ -73,16 +77,13 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-
+//          Get the name of the current user
             val Name = FirebaseDatabase.getInstance().getReference("User").child(current!!.uid).child("username")
             Name.addValueEventListener(object : ValueEventListener{
                   override fun onDataChange(snapshot: DataSnapshot) {
                          Name1 = snapshot.value.toString()
-
                   }
-
                   override fun onCancelled(error: DatabaseError) {
-
                   }
 
             })
@@ -90,7 +91,7 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-
+           // This is the code for the updation of the status of the user
             database!!.reference.child("Presense").child(Recieveruid!!).addValueEventListener(object : ValueEventListener{
                   override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()){
@@ -109,6 +110,9 @@ class ChatActivity : AppCompatActivity() {
                   }
             })
 
+
+
+            // This is the code for the updation of the messages in recycler view
             mDataBase.child("Chats")
                   .child(senderRoom!!)
                   .child("Messages")
@@ -133,35 +137,14 @@ class ChatActivity : AppCompatActivity() {
             })
 
 
-//            val token = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("token")
-//                token.addValueEventListener(object : ValueEventListener{
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                              if (snapshot.exists()){
-//                                    Token = snapshot.value.toString()
-//                              Toast.makeText(this@ChatActivity, Token, Toast.LENGTH_SHORT).show()}
-//                              else
-//                                          Toast.makeText(this@ChatActivity, "Token not found", Toast.LENGTH_SHORT).show()
-//
-//
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//
-//
-//
-//
-//                        }
-//
-//
-//                })
 
 
 
 
+//          This is the code for the updation of the profile pic of the reciever
             Reciever.text = name
             val URL = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("url")
             URL.addValueEventListener(object : ValueEventListener{
-
                   override fun onDataChange(snapshot: DataSnapshot) {
                         var profilepic = snapshot.value.toString()
                         Picasso.get().load(profilepic)
@@ -169,7 +152,6 @@ class ChatActivity : AppCompatActivity() {
                               .centerCrop()
                               .into(image)
                   }
-
                   override fun onCancelled(error: DatabaseError) {
 
                   }
@@ -177,98 +159,87 @@ class ChatActivity : AppCompatActivity() {
             })
 
 
-
-
-
-
-
+            // this is to go back to the previous activity
             val back : ImageView = findViewById(R.id.backButton)
             back.setOnClickListener {
                   OnBackPressed()
             }
 
 
-
+//          Action for the send button
             sendButton.setOnClickListener {
-                  val message = messageEditText.text.toString()
-                  val date = Date()
-                  val messageobject = Message(message, senderuid!!, date.time)
-                  val randomekey = database!!.reference.push().key
-                  val lastMsgObj = mapOf(
-                        "lastMsg" to messageobject.message!!,
-                        "lastMsgTime" to date.time
-                  )
-                  val notificationSender: FmcNotificationSender = FmcNotificationSender(
-                        "/topics/$Recieveruid",
-                        Name1 + " sent you a message",
-                        message,
-                        this@ChatActivity,
-                        this@ChatActivity
-                  )
-//                  if (Token == null){
-//                        Toast.makeText(this, "Token is null", Toast.LENGTH_SHORT).show()
-//                  }
 
-                  database!!.reference.child("Presense").child(Recieveruid!!).addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                              if (snapshot.exists()){
-                                    val Status = snapshot.getValue(String::class.java)
-                                    if (Status == "Offline"){
-                                          setvalue()
-                                    }else{
+                  if(!messageEditText.text.isEmpty()) {
+
+
+                        val message = messageEditText.text.toString()
+                        val date = Date()
+                        val messageobject = Message(message, senderuid!!, date.time)
+                        val randomekey = database!!.reference.push().key
+                        val lastMsgObj = mapOf(
+                              "lastMsg" to messageobject.message!!,
+                              "lastMsgTime" to date.time
+                        )
+
+                        // send notification only if the user if offline
+                        val notificationSender: FmcNotificationSender = FmcNotificationSender(
+                              "/topics/$Recieveruid",
+                              Name1 + " sent you a message",
+                              message,
+                              this@ChatActivity,
+                              this@ChatActivity
+                        )
+                        database!!.reference.child("Presense").child(Recieveruid!!)
+                              .addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                          if (snapshot.exists()) {
+                                                val Status = snapshot.getValue(String::class.java)
+                                                if (Status == "Offline") {
+                                                      setvalue()
+                                                } else {
+
+                                                }
+                                          }
+                                    }
+
+                                    private fun setvalue() {
+                                          userStatus = "Offline"
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
 
                                     }
-                              }
+                              })
+
+                        if (userStatus == "Offline") {
+                              notificationSender.SendNotifications()
                         }
 
-                        private fun setvalue() {
-                              userStatus = "Offline"
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-
-                        }
-                  })
-
-                       if (userStatus == "Offline"){
-                            notificationSender.SendNotifications()
-                       }
 
 
-
-
-//                  if(messageEditText.text.isEmpty()){
-//                        return@setOnClickListener
-//                  }
-//                  else if( )
-//                        run {
-//                              val notificationSender: FmcNotificationSender = FmcNotificationSender(
-//                                    "/topics/all",
-//                                    "New Message",
-//                                    message,
-//                                    this,
-//                                    this
-//                              )
-//                                   notificationSender.SendNotifications()
-//
-//                        }
-
-//                  lastMsgObj["lastMsg"] = messageobject.message!!
-//                  lastMsgObj["lastMsgTime"] = date.time
-                  database!!.reference.child("Chats").child(senderRoom!!).updateChildren(lastMsgObj)
-                  database!!.reference.child("Chats").child(receiverRoom!!).updateChildren(lastMsgObj)
-                  database!!.reference.child("Chats").child(senderRoom!!).child("Messages").child(randomekey!!).setValue(messageobject)
-                            .addOnSuccessListener {
-                                   database!!.reference.child("Chats").child(receiverRoom!!).child("Messages").child(randomekey!!).setValue(messageobject)
+                        database!!.reference.child("Chats").child(senderRoom!!)
+                              .updateChildren(lastMsgObj)
+                        database!!.reference.child("Chats").child(receiverRoom!!)
+                              .updateChildren(lastMsgObj)
+                        database!!.reference.child("Chats").child(senderRoom!!).child("Messages")
+                              .child(randomekey!!).setValue(messageobject)
+                              .addOnSuccessListener {
+                                    database!!.reference.child("Chats").child(receiverRoom!!)
+                                          .child("Messages").child(randomekey!!)
+                                          .setValue(messageobject)
                                           .addOnSuccessListener {
                                           }
-                            }
-                  messageEditText.text.clear()
+                              }
+                        messageEditText.text.clear()
 
-                  database!!.reference.child("Presense").child(Recieveruid!!)
+                        database!!.reference.child("Presense").child(Recieveruid!!)
+
+                  }
 
 
             }
+
+
 
             val handler = Handler()
             messageEditText.addTextChangedListener(object : TextWatcher {

@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Messenger</string>
+    <string name="app_name" translatable="false">HindiHangOut</string>
     <string name="mesenger">Messenger</string>
     <string name="register">Register</string>
-    <string name="signup">SignUp?</string>
-    <string name="password">Password</string>
-    <string name="username">Username</string>
-    <string name="email">Email</string>
+    <string name="signup" translatable="false">SignUp?</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="username" translatable="false">Username</string>
+    <string name="email" translatable="false">Email</string>
 </resources>

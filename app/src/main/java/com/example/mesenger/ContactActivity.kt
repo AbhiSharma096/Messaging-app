@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -40,6 +41,7 @@ class ContactActivity : AppCompatActivity() {
     private lateinit var userProfilePic : CircleImageView
     private lateinit var shimmerlayout : ShimmerLayout
     private lateinit var textView: TextView
+    private lateinit var ChatGpt: LinearLayout
 
 
 
@@ -59,6 +61,7 @@ class ContactActivity : AppCompatActivity() {
         newRecyclerview.setHasFixedSize(true)
         shimmerlayout = findViewById(R.id.Shimmer)
         shimmerlayout.startShimmerAnimation()
+          ChatGpt = findViewById(R.id.floatingButton)
         val materialtoolbar :MaterialToolbar = findViewById(R.id.toolbar)
         val drawerlayout : DrawerLayout = findViewById(R.id.drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -71,7 +74,7 @@ class ContactActivity : AppCompatActivity() {
         val name = navigationView.getHeaderView(0).findViewById<TextView>(R.id.name)
         val email = navigationView.getHeaderView(0).findViewById<TextView>(R.id.email)
 
-        //supportActionBar!!.hide()
+
 
         materialtoolbar.setNavigationOnClickListener {
             drawerlayout.openDrawer(GravityCompat.START)
@@ -190,6 +193,14 @@ class ContactActivity : AppCompatActivity() {
               startActivity(intent)
               }
 
+               // Open chat activity
+              ChatGpt.setOnClickListener {
+              val intent = Intent(this, ChatGPT::class.java)
+                   // intent.putExtra("room", current.uid)
+              startActivity(intent)
+              }
+
+
 
           newRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener(){
               override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -238,7 +249,6 @@ class ContactActivity : AppCompatActivity() {
 
 
     }
-
       private fun createAnimator(): ValueAnimator{
             val initsize = textView.measuredWidth
             val animator = ValueAnimator.ofInt(initsize, 0)
@@ -251,10 +261,7 @@ class ContactActivity : AppCompatActivity() {
                 }
             return animator
       }
-
-
-
-    private fun `checklistsLoge-din`() {
+      private fun `checklistsLoge-din`() {
         val uri = FirebaseAuth.getInstance().uid
         if (uri == null ){
             val i = Intent(this, Signin::class.java)
