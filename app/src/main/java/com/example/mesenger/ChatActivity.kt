@@ -141,6 +141,7 @@ class ChatActivity : AppCompatActivity() {
 
 
 
+
 //          This is the code for the updation of the profile pic of the reciever
             Reciever.text = name
             val URL = FirebaseDatabase.getInstance().getReference("User").child(Recieveruid!!).child("url")
@@ -250,7 +251,7 @@ class ChatActivity : AppCompatActivity() {
                   override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         database!!.reference.child("Presense").child(senderuid!!).setValue("typing...")
                         handler.removeCallbacksAndMessages(null)
-                            handler.postDelayed(userStopedTyping, 1000)
+                        handler.postDelayed(userStopedTyping, 1000)
                   }
                   var userStopedTyping = Runnable {
                         database!!.reference.child("Presense").child(senderuid!!).setValue("Online")

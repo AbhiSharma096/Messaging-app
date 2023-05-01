@@ -32,6 +32,7 @@ class FmcNotificationSender(
                   notiObject.put("body", body)
                   notiObject.put("icon", "icon") // enter icon that exists in drawable only
                   mainObj.put("notification", notiObject)
+
                   val request: JsonObjectRequest = object : JsonObjectRequest(
                         Method.POST, postUrl, mainObj,
                         Response.Listener {

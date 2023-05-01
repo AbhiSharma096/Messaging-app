@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Adaptar.ChatAdaptor
 import com.example.Adaptar.MessageAdaptor
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import okhttp3.*
@@ -39,6 +41,7 @@ class ChatGPT : AppCompatActivity() {
       private lateinit var back : ImageView
       private lateinit var welcometext : ImageView
       private lateinit var url : String
+      private lateinit var progressbar : LinearProgressIndicator
 
 
       override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +56,7 @@ class ChatGPT : AppCompatActivity() {
             database = FirebaseDatabase.getInstance()
             back = findViewById(R.id.backButton)
             welcometext =findViewById(R.id.newmessage)
+            progressbar = findViewById(R.id.progressBar)
             val senderuid = FirebaseAuth.getInstance().currentUser?.uid
             url = "https://api.openai.com/v1/completions"
             ChatAdaptor = ChatAdaptor(this,messagelist,senderuid!!,"ChatGPT")
@@ -112,7 +116,7 @@ class ChatGPT : AppCompatActivity() {
                         database!!.reference.child("Chats").child(senderuid!!).child("Messages")
                               .child(randomkey!!).setValue(messageobject)
                               .addOnSuccessListener {
-
+                                    progressbar.visibility = ProgressBar.VISIBLE
                                     callAPI(message){response ->
 
                                                  addResponse(response)
@@ -136,12 +140,10 @@ class ChatGPT : AppCompatActivity() {
             database!!.reference.child("Chats").child(senderuid!!).child("Messages")
                   .child(randomkey!!).setValue(messageobject)
                   .addOnSuccessListener {
+                            progressbar.visibility = ProgressBar.INVISIBLE
 
                   }
             messageEditText.text.clear()
-
-
-
       }
 
 
@@ -149,7 +151,7 @@ class ChatGPT : AppCompatActivity() {
 
       fun callAPI( message : String, callback: (String) -> Unit){
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            val apiKey = ""
+            val apiKey = "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"
             val url = "https://api.openai.com/v1/completions"
 
             val requestBody = """
@@ -200,3 +202,5 @@ class ChatGPT : AppCompatActivity() {
 
 
 
+// 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
+//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

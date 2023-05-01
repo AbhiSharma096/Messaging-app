@@ -65,6 +65,7 @@
                    android:textStyle="bold|normal"
                    android:visibility="invisible" />
            </LinearLayout>
+
        </LinearLayout>
    </androidx.appcompat.widget.Toolbar>
     <LinearLayout

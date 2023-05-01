@@ -28,7 +28,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="22dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:textColor="@color/black"
@@ -39,8 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:layout_marginTop="6dp"
             android:layout_marginStart="20dp"
-            android:textColor="@color/black"
+            android:textColor="#353535"
+            android:textStyle="italic|normal"
             android:id="@+id/LatestMessage"
             android:text="Latest messages will appear here"/>
 

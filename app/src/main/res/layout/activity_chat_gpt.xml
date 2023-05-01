@@ -188,6 +188,18 @@
 
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="70dp"
+        android:layout_height="1dp"
+        android:layout_below="@+id/toolbar"
+        app:indicatorColor="@color/white"
+        android:visibility="gone"
+        android:id="@+id/progressBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
+
 
 
 
